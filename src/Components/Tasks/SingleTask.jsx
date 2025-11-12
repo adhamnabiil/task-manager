@@ -10,11 +10,21 @@ const SingleTask = ({
   deleteTask,
   isDeleting,
   openEditModal,
+  onDragStart,
+  onDragEnter,
+  onDragEnd,
+  isDragging,
 }) => {
   return (
     <li
       draggable
-      className="flex justify-between items-center border-blue-200 border-b-1 mb-2"
+      onDragStart={(e) => onDragStart(e, task)}
+      onDragEnter={(e) => onDragEnter(e, task)}
+      onDragEnd={onDragEnd}
+      onDragOver={(e) => e.preventDefault()}
+      className={`flex justify-between items-center border-blue-200 border-b-1 mb-2 transition-all ${
+        isDragging ? "opacity-50 scale-95" : "opacity-100 scale-100"
+      } cursor-move`}
     >
       <div className="flex items-center">
         <Checkbox

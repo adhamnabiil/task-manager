@@ -117,6 +117,13 @@ const Tasks = () => {
     }
   };
 
+  const handleReorderTasks = (newOrderedTasks) => {
+    setFilteredTasks(newOrderedTasks);
+    if (searchValue.trim() === "") {
+      setTasks(newOrderedTasks);
+    }
+  };
+
   const openEditModal = (task = null) => {
     setAddEditModal({ open: true, data: task });
   };
@@ -164,6 +171,7 @@ const Tasks = () => {
           deleteTask={deleteTask}
           isDeleting={isDeleting}
           openEditModal={openEditModal}
+          onReorderTasks={handleReorderTasks}
         />
       )}
       {addEditModal.open && (
