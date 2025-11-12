@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -6,7 +7,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useMemo, useState } from "react";
 
-const AddEditTask = ({ isAdding, task, addTask, editTask, handleClose }) => {
+const AddEditTask = ({
+  isAdding,
+  task,
+  addTask,
+  editTask,
+  isSubmitting,
+  handleClose,
+}) => {
   const [taskName, setTaskName] = useState(isAdding ? "" : task.todo);
 
   const isValidName = useMemo(
@@ -17,13 +25,12 @@ const AddEditTask = ({ isAdding, task, addTask, editTask, handleClose }) => {
     [taskName, isAdding, task]
   );
 
-  const handleApply = () => {
+  const handleSubmit = () => {
     if (isAdding) {
       addTask(taskName);
     } else {
       editTask(taskName, task.id);
     }
-    handleClose();
   };
 
   return (
@@ -47,10 +54,10 @@ const AddEditTask = ({ isAdding, task, addTask, editTask, handleClose }) => {
         <Button
           color="primary"
           variant="contained"
-          disabled={!isValidName}
-          onClick={handleApply}
+          disabled={!isValidName || isSubmitting}
+          onClick={handleSubmit}
         >
-          Apply
+          {isSubmitting ? <CircularProgress /> : "Apply"}
         </Button>
       </DialogActions>
     </Dialog>
